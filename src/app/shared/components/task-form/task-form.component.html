@@ -1,0 +1,20 @@
+<mat-card class="mx-3 my-3 form">
+    <form class="my-3 mx-3" [formGroup]="todoForm">
+        <mat-form-field *ngIf="!isEditEnabled" appearance="outline">
+        <mat-label>Select task type</mat-label>
+        <mat-select [(value)]="selected" required>
+          <mat-option value="daily">Daily</mat-option>
+          <mat-option value="weekly">Weekly</mat-option>
+          <mat-option value="monthly">Monthly</mat-option>
+        </mat-select>
+        </mat-form-field>
+         <mat-form-field appearance="outline">
+           <mat-label>Task name</mat-label>
+           <input formControlName="item" matInput placeholder="Placeholder">
+           <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-hint>Add task name</mat-hint>
+        </mat-form-field>
+        <button *ngIf="!isEditEnabled" (click)="passTask(item, selected)" mat-raised-button [disabled]="todoForm.invalid" style="background: rgb(43, 192, 230);color: white;">Add</button>
+        <button *ngIf="isEditEnabled" (click)="updateTask()" mat-raised-button [disabled]="todoForm.invalid" style="background: rgb(43, 192, 230);color: white;">Update</button>
+    </form>
+</mat-card>

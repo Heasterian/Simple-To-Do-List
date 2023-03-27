@@ -1,0 +1,64 @@
+<div cdkDropListGroup>
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Daily -->
+            <div class="example-container">
+                <h2 class="head-title">Daily <span *ngIf="daily.length > 0"> - {{ daily.length }}</span>
+                </h2>
+
+                <div cdkDropList [cdkDropListData]="daily" class="example-list"
+                    (cdkDropListDropped)="drop($event)" >
+                    <div class="example-box" *ngFor="let item of daily; let i = index" cdkDrag [cdkDragDisabled]="isEditEnabled"><span
+                            class="wrapit">{{item.description}}</span>
+                        <div class="box">
+                            <button mat-icon-button color="warn"
+                                (click)="deleteTask(i, 'daily')"><mat-icon>delete</mat-icon></button>
+                            <button mat-icon-button style="color: rgb(43, 192, 230);"
+                                (click)="onEditTask(i, item.description, 'daily')"><mat-icon>edit</mat-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- Weekly -->
+            <div class="example-container">
+                <h2 class="head-title">Weekly <span *ngIf="weekly.length > 0"> - {{ weekly.length }}</span>
+                </h2>
+
+                <div cdkDropList [cdkDropListData]="weekly" class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of weekly; let i = index" cdkDrag [cdkDragDisabled]="isEditEnabled"><span>{{item.description}}</span>
+                        
+                        <div class="box">
+                            <button mat-icon-button color="warn"
+                                (click)="deleteTask(i, 'weekly')"><mat-icon>delete</mat-icon></button>
+                            <button mat-icon-button style="color: rgb(43, 192, 230);"
+                                (click)="onEditTask(i, item.description, 'weekly')"><mat-icon>edit</mat-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- done -->
+            <div class="example-container">
+                <h2 class="head-title">Monthly <span *ngIf="monthly.length > 0"> - {{ monthly.length }}</span></h2>
+
+                <div cdkDropList [cdkDropListData]="monthly" class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of monthly; let i = index;" cdkDrag [cdkDragDisabled]="isEditEnabled">
+                        {{item.description}}
+                        <div class="box">
+                            <button mat-icon-button color="warn"
+                                (click)="deleteTask(i, 'monthly')"><mat-icon>delete</mat-icon></button>
+                            <button mat-icon-button style="color: rgb(43, 192, 230);"
+                                (click)="onEditTask(i, item.description, 'monthly')"><mat-icon>edit</mat-icon></button>
+                            <button mat-icon-button
+                                style="color: green;"><mat-icon>check_circle</mat-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,17 @@
+:host .mat-mdc-form-field {
+    width: 100%;
+}
+
+.form {
+    box-shadow: 8px 8px 24px 0px rgba(0, 0, 0, 1);
+    min-width: min-content;
+  }
+
+.backgroundGradient {
+    background: rgb(193,111,68);
+    background: linear-gradient(132deg, rgba(193,111,68,1) 0%, rgba(93,72,43,1) 63%, rgba(55,55,106,1) 100%);
+}
+
+.mat-card {
+    min-width: min-content;
+}
