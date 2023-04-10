@@ -34,7 +34,7 @@ export class TaskFormComponent {
   passTask(item: string, selectedType: string){
     item = this.todoForm.value.item;
     selectedType = this.selected;
-    this.task.emit([item, selectedType]);
+    this.taskService.addTask(item, selectedType);
     this.todoForm.reset();
   };
 
