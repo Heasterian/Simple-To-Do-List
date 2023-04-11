@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
-import { TaskInterface } from 'src/app/shared/interfaces/task-interface';
+import { TaskInterface, TaskList } from 'src/app/shared/interfaces/task-interface';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { StorageService } from '../../services/storage.service';
 
 
 @Component({
@@ -17,13 +18,14 @@ export class TaskListComponent {
   isEditEnabled: boolean = false;
   selected: string = 'daily';
 
-  constructor(private taskService: TaskService) {};
+  constructor(private taskService: TaskService, private storageService: StorageService) {};
 
   ngOnInit(): void {
-      this.daily =  this.taskService.TaskList.daily;
-      this.weekly = this.taskService.TaskList.weekly;
-      this.monthly = this.taskService.TaskList.monthly;
-      this.taskService.edit.subscribe(isEditEnabled => {this.isEditEnabled = isEditEnabled;});
+    this.taskService.loadLocalTaskList();
+    this.daily =  this.taskService.TaskList.daily;
+    this.weekly = this.taskService.TaskList.weekly;
+    this.monthly = this.taskService.TaskList.monthly;
+    this.taskService.edit.subscribe(isEditEnabled => {this.isEditEnabled = isEditEnabled;});
   };
   
   
@@ -38,12 +40,7 @@ export class TaskListComponent {
         event.currentIndex
       );
     };
-  };
-
-  addTask(task: string[]){
-    const description = task[0];
-    const taskType = task[1];
-    this.taskService.addTask(description, taskType);
+    this.storageService.saveData("TaskList", JSON.stringify(this.TaskList));
   };
 
   deleteTask(i: number, taskType: string) {
@@ -53,8 +50,4 @@ export class TaskListComponent {
   onEditTask(i:number, item: string, taskType: string){
     this.taskService.onEditTask(i, item, taskType);
   };
-
-  printJson(){
-    JSON.stringify(this.TaskList);
-  }
 }

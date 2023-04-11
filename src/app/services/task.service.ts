@@ -1,8 +1,7 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { TaskInterface, TaskList } from '../shared/interfaces/task-interface';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { ɵafterNextNavigation } from '@angular/router';
+import { StorageService } from '../shared/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,7 @@ import { ɵafterNextNavigation } from '@angular/router';
 
 export class TaskService {
   todoForm !: FormGroup;
-  constructor(private fb: FormBuilder){  }
+  constructor(private fb: FormBuilder, private storageService: StorageService){  }
 
   public TaskList: TaskList = {
     daily: [],
@@ -43,6 +42,31 @@ export class TaskService {
         this.weekly.push(newTask);
         break;
     };
+    this.storageService.saveData("TaskList", JSON.stringify(this.TaskList));
+  };
+
+  loadTask(description:string, done: boolean, taskType:string){
+    const newTask: TaskInterface = {
+      description:description,
+      done:done
+    }
+    switch(taskType){
+      case "monthly":
+        this.monthly.push(newTask);
+        break;
+      case "daily":
+        this.daily.push(newTask);
+        break;
+      case "weekly":
+        this.weekly.push(newTask);
+        break;
+    };
+  };
+  loadLocalTaskList(){
+    let json: TaskList = JSON.parse(this.storageService.getData("TaskList")!);
+    json.daily.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "daily")});
+    json.weekly.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "weekly")});
+    json.monthly.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "monthly")});
   };
 
   getTasks(): TaskList {
@@ -61,6 +85,7 @@ export class TaskService {
         this.weekly.splice(i, 1);
         break;
     };
+    this.storageService.saveData("TaskList", JSON.stringify(this.TaskList));
   };
   
   onEditTask(i:number, item: string, taskType: string){
@@ -82,5 +107,6 @@ export class TaskService {
         break;
     };
     this.edit.emit(false);
+    this.storageService.saveData("TaskList", JSON.stringify(this.TaskList));
   };
 };
