@@ -1,0 +1,22 @@
+<div>
+    <div style="margin-left: 20px;">
+        <h1>Settings</h1>
+        <hr class="rounded">
+        <div style="margin-left: 20px;">
+            <h2>Manage Tasks</h2>
+            <div style="margin-left: 20px;">
+                <hr class="rounded">
+                <h3>Export Tasks</h3>
+                <a mat-raised-button (click)="saveJson()" title="Save tasklist" [href]="downloadJsonHref" download="tasks.json">Save as json</a>
+                <hr class="rounded">
+                <h3>Import Tasks</h3>
+                <input type="file" class="file-input" (change)="importJson($event)" requiredFileType="object/json" #fileUpload>
+                <button mat-raised-button class="upload-button" (click)="fileUpload.click()">Import from json</button>
+                <hr class="rounded">
+                <h3>Clear all Tasks</h3>
+                <button mat-raised-button color="warn" (click)="openDialog()">Delete tasks</button>
+                <hr class="rounded">
+            </div>
+        </div>
+    </div>
+</div>

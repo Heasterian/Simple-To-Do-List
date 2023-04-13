@@ -23,6 +23,7 @@ export class TaskService {
   updateIndex!: number;
   updateType!: string;
   item: string = '';
+  counter: number = 0;
 
   public edit = new EventEmitter<boolean>();
 
@@ -63,11 +64,21 @@ export class TaskService {
     };
   };
   loadLocalTaskList(){
-    let json: TaskList = JSON.parse(this.storageService.getData("TaskList")!);
-    json.daily.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "daily")});
-    json.weekly.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "weekly")});
-    json.monthly.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "monthly")});
+     if (this.counter === 0) {
+      let json: TaskList = JSON.parse(this.storageService.getData("TaskList")!);
+      json.daily.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "daily")});
+      json.weekly.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "weekly")});
+      json.monthly.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "monthly")});
+      this.counter ++;
+     }
   };
+
+  importTaskList(json: TaskList){
+    json.daily?.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "daily")});
+    json.weekly?.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "weekly")});
+    json.monthly?.forEach((element: TaskInterface) => {this.loadTask(element.description, element.done, "monthly")});
+    this.storageService.saveData("TaskList", JSON.stringify(this.TaskList));
+  }
 
   getTasks(): TaskList {
     return this.TaskList;
@@ -86,6 +97,13 @@ export class TaskService {
         break;
     };
     this.storageService.saveData("TaskList", JSON.stringify(this.TaskList));
+  };
+  
+  clearTaskList(){
+    this.storageService.saveData("TaskList", "{\"daily\":[],\"weekly\":[],\"monthly\":[]}");
+    this.daily.splice(0)
+    this.weekly.splice(0)
+    this.monthly.splice(0)
   };
   
   onEditTask(i:number, item: string, taskType: string){
