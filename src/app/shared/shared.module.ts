@@ -15,7 +15,6 @@ import { MatInputModule } from '@angular/material/input';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ConfirmationDialog, SettingsComponent } from './components/settings/settings.component';
 import { MatDialogModule } from '@angular/material/dialog';
-
 @NgModule({
   declarations: [
     TaskFormComponent,

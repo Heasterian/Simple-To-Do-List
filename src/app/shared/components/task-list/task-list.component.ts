@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
-import { TaskInterface, TaskList } from 'src/app/shared/interfaces/task-interface';
+import { TaskInterface } from 'src/app/shared/interfaces/task-interface';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { StorageService } from '../../services/storage.service';
 
@@ -40,6 +40,7 @@ export class TaskListComponent {
         event.currentIndex
       );
     };
+    this.taskService.sortTask(this.TaskList)
     this.storageService.saveData("TaskList", JSON.stringify(this.TaskList));
   };
 
@@ -50,4 +51,12 @@ export class TaskListComponent {
   onEditTask(i:number, item: string, taskType: string){
     this.taskService.onEditTask(i, item, taskType);
   };
+
+  swapTaskStatus(taskType: string, i: number){
+    this.taskService.swapTaskStatus(taskType, i);
+  }
+  resetAllTasksStatus(taskType: string){
+    this.taskService.resetAllTaskStatus(taskType);
+
+  }
 }
