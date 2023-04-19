@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { Subject, takeUntil } from 'rxjs';
 import { TaskService } from 'src/app/services/task.service';
 import { TaskInterface } from 'src/app/shared/interfaces/task-interface';
 
@@ -17,16 +18,18 @@ export class TaskFormComponent {
   monthly!: TaskInterface[];
   item :string = '';
   isEditEnabled: boolean = false;
+  itemDescription!: string;
+  private signal$ = new Subject();
 
 
   constructor(private fb: FormBuilder, private taskService: TaskService) {};
-  @Output() task = new EventEmitter<string[]>()
 
   ngOnInit(): void {
     this.todoForm = this.fb.group({
       item : ['', Validators.required]
     });
-    this.taskService.edit.subscribe(isEditEnabled => {this.isEditEnabled = isEditEnabled;});
+    this.taskService.edit.pipe(takeUntil(this.signal$)).subscribe(isEditEnabled => {this.isEditEnabled = isEditEnabled;});
+    this.taskService.itemDescription.pipe(takeUntil(this.signal$)).subscribe(itemDescription => {this.todoForm.controls["item"].setValue(itemDescription)});
 };
     
   
@@ -41,7 +44,6 @@ export class TaskFormComponent {
   
   
   onEditTask(i:number, item: string, taskType: string){
-    this.taskService.onEditTask(i, item, taskType);
     switch(taskType){
       case "monthly":
         this.todoForm.controls["item"].setValue(this.monthly[this.taskService.updateIndex].description);
@@ -53,10 +55,16 @@ export class TaskFormComponent {
         this.todoForm.controls['item'].setValue(this.weekly[this.taskService.updateIndex].description); 
         break;
     };
+    this.taskService.onEditTask(i, item, taskType);
     this.isEditEnabled = true;
   };
   updateTask(){
     this.taskService.updateTask(this.todoForm.value.item);
     this.todoForm.reset();
+  };
+
+  ngOnDestroy(){
+    this.signal$.next;
+    this.signal$.complete();
   };
 }
