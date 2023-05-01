@@ -1,7 +1,12 @@
-.container-fluid {
-  height: 94.1%;
+.base {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.col-md3 {
+.form-column {
   min-width: min-content;
+}
+
+.list-column {
 }
