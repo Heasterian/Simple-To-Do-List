@@ -1,89 +1,35 @@
 <div cdkDropListGroup>
     <div class="row">
-        <div class="col-md-4">
-            <!-- Daily -->
+        <div *ngFor="let list of this.TaskList | keyvalue" class="col-md-4">
             <div class="example-container">
-                <h2 class="head-title">Daily <span *ngIf="daily.length > 0"> - {{ daily.length }}</span>
-                    <span class="spacer"></span>
+                <h2 class="head-title">
+                    <div>{{list.key}} <span *ngIf="this.TaskList[list.key].length > 0"> - {{
+                            this.TaskList[list.key].length }}</span></div>
                     <div class="box">
                         <button mat-icon-button style="color: rgb(24, 110, 22);"
-                            (click)="resetAllTasksStatus('daily')"><mat-icon>restore</mat-icon></button>
+                            (click)="resetAllTasksStatus(list.key)"><mat-icon>restore</mat-icon></button>
                     </div>
                 </h2>
-
-                <div cdkDropList [cdkDropListData]="daily" class="example-list"
-                    (cdkDropListDropped)="drop($event)" >
-                    <div class="example-box" [class.done]="item.done" *ngFor="let item of daily; let i = index" cdkDrag [cdkDragDisabled]="isEditEnabled || item.done"><span
+                <div cdkDropList [cdkDropListData]="this.TaskList[list.key]" class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" [class.done]="item.done"
+                        *ngFor="let item of this.TaskList[list.key]; index as i" cdkDrag
+                        [cdkDragDisabled]="(isEditEnabledAsync | async) || item.done"><span
                             class="wrapit">{{item.description}}</span>
                         <div class="box">
                             <button mat-icon-button color="warn"
-                                (click)="deleteTask(i, 'daily')"><mat-icon>delete</mat-icon></button>
-                            <button mat-icon-button style="color: rgb(43, 192, 230);"
-                                (click)="onEditTask(i, item.description, 'daily')"><mat-icon>edit</mat-icon></button>
-                            <button *ngIf="!item.done" mat-icon-button style="color: rgb(24, 110, 22);"
-                                (click)="swapTaskStatus('daily', i)"><mat-icon>check_circle</mat-icon></button>
-                            <button *ngIf="item.done" mat-icon-button style="color: rgb(24, 110, 22);"
-                                (click)="swapTaskStatus('daily', i)"><mat-icon>restore</mat-icon></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <!-- Weekly -->
-            <div class="example-container">
-                <h2 class="head-title">Weekly <span *ngIf="weekly.length > 0"> - {{ weekly.length }}</span>
-                    <span class="spacer"></span>
-                    <div class="box">
-                        <button mat-icon-button style="color: rgb(24, 110, 22);"
-                            (click)="resetAllTasksStatus('weekly')"><mat-icon>restore</mat-icon></button>
-                    </div>
-                </h2>
-
-                <div cdkDropList [cdkDropListData]="weekly" class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" [class.done]="item.done" *ngFor="let item of weekly; let i = index" cdkDrag [cdkDragDisabled]="isEditEnabled || item.done"><span>{{item.description}}</span>
-                        
-                        <div class="box">
-                            <button mat-icon-button color="warn"
-                                (click)="deleteTask(i, 'weekly')"><mat-icon>delete</mat-icon></button>
-                            <button mat-icon-button style="color: rgb(43, 192, 230);"
-                                (click)="onEditTask(i, item.description, 'weekly')"><mat-icon>edit</mat-icon></button>
-                            <button *ngIf="!item.done" mat-icon-button style="color: rgb(24, 110, 22);"
-                                (click)="swapTaskStatus('weekly', i)"><mat-icon>check_circle</mat-icon></button>
-                            <button *ngIf="item.done" mat-icon-button style="color: rgb(24, 110, 22);"
-                                (click)="swapTaskStatus('weekly', i)"><mat-icon>restore</mat-icon></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <!-- done -->
-            <div class="example-container">
-                <h2 class="head-title">Monthly <span *ngIf="monthly.length > 0"> - {{ monthly.length }}</span><span class="spacer"></span>
-                    <div class="box">
-                        <button mat-icon-button style="color: rgb(24, 110, 22);"
-                            (click)="resetAllTasksStatus('monthly')"><mat-icon>restore</mat-icon></button>
-                    </div>
-                </h2>
-
-                <div cdkDropList [cdkDropListData]="monthly" class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" [class.done]="item.done" *ngFor="let item of monthly; let i = index;" cdkDrag [cdkDragDisabled]="isEditEnabled || item.done">
-                        {{item.description}}
-                        <div class="box">
-                            <button mat-icon-button color="warn"
-                                (click)="deleteTask(i, 'monthly')"><mat-icon>delete</mat-icon></button>
-                            <button mat-icon-button style="color: rgb(43, 192, 230);"
-                                (click)="onEditTask(i, item.description, 'monthly')"><mat-icon>edit</mat-icon></button>
-                            <button *ngIf="!item.done" mat-icon-button style="color: rgb(24, 110, 22);"
-                                (click)="swapTaskStatus('monthly', i)"><mat-icon>check_circle</mat-icon></button>
-                            <button *ngIf="item.done" mat-icon-button style="color: rgb(24, 110, 22);"
-                                (click)="swapTaskStatus('monthly', i)"><mat-icon>restore</mat-icon></button>
+                                (click)="deleteTask(i, list.key)"><mat-icon>delete</mat-icon></button>
+                            <button mat-icon-button color="primary"
+                                (click)="onEditTask(i, item.description, list.key)"><mat-icon>edit</mat-icon></button>
+                            <button mat-icon-button style="color: rgb(24, 110, 22);"
+                                (click)="swapTaskStatus(list.key, i)">
+                                <mat-icon *ngIf="!item.done">check_circle</mat-icon>
+                                <mat-icon *ngIf="item.done">restore</mat-icon>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
