@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  TrackByFunction,
+} from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
 import { TaskInterface } from 'src/app/shared/interfaces/task-interface';
 import {
@@ -12,6 +16,7 @@ import { StorageService } from '../../services/storage.service';
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class TaskListComponent {
   list!: keyof typeof this.TaskList;
@@ -69,4 +74,6 @@ export class TaskListComponent {
   resetAllTasksStatus(taskType: keyof typeof this.taskService.TaskList) {
     this.taskService.resetAllTaskStatus(taskType);
   }
+
+  trackByTask: TrackByFunction<TaskInterface[]> = (id, item) => item[id];
 }

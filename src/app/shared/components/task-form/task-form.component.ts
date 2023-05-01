@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Subject, filter } from 'rxjs';
 import { TaskService } from 'src/app/services/task.service';
 import { TaskInterface } from 'src/app/shared/interfaces/task-interface';
 
@@ -10,7 +9,7 @@ import { TaskInterface } from 'src/app/shared/interfaces/task-interface';
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskFormComponent {
   todoForm: FormGroup = this.fb.group({
@@ -54,7 +53,7 @@ export class TaskFormComponent {
     this.taskService.updateTask(description);
     this.todoForm.reset();
   }
-  
+
   private _pushToEdit() {
     this.taskService.itemDescription
       .pipe(untilDestroyed(this))
