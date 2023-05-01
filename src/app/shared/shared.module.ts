@@ -13,12 +13,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
+import { SettingsComponent } from './components/settings/settings.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 @NgModule({
   declarations: [
     TaskFormComponent,
     NavbarComponent,
-    TaskListComponent
+    TaskListComponent,
+    SettingsComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     CommonModule,
@@ -33,11 +37,14 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatIconModule,
     MatInputModule,
     DragDropModule,
+    MatDialogModule
   ],
   exports: [
     TaskFormComponent,
     NavbarComponent,
-    TaskListComponent
+    TaskListComponent,
+    SettingsComponent,
   ]
 })
-export class SharedModule { }
+export class SharedModule { 
+}
