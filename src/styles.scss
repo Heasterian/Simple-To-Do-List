@@ -1,4 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+
+@use "./styles/themes/light";
+@use "./styles/themes/dark";
+
+@include mat.core();
+
+@include mat.core-theme(dark.$my-app-dark-theme);
+@include mat.button-theme(dark.$my-app-dark-theme);
+@include mat.toolbar-theme(dark.$my-app-dark-theme);
+@include mat.dialog-theme(dark.$my-app-dark-theme);
+@include mat.select-theme(dark.$my-app-dark-theme);
+@include mat.form-field-theme(dark.$my-app-dark-theme);
+@include mat.option-theme(dark.$my-app-dark-theme);
+@include mat.card-theme(dark.$my-app-dark-theme);
+@include mat.icon-theme(dark.$my-app-dark-theme);
+@include mat.icon-button-theme(dark.$my-app-dark-theme);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

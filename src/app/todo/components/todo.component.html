@@ -1,13 +1,8 @@
-
-<body>
-    <div class="container-fluid" style="background-color: #303030">
-        <div class="row">
-            <div style="background-color: #303030;min-height: 100%; min-width: min-content;" class="col-md-3">
-                <app-task-form></app-task-form>
-            </div>
-            <div style="background-color: #303030;min-height:100%; min-width: min-content;" class="col-md-9 my-3">
-                <app-task-list></app-task-list>
-            </div>
-        </div>
+<div class="base">
+    <div class="form-column">
+       <app-task-form></app-task-form>
     </div>
-</body>
+    <div class="list-column">
+        <app-task-list></app-task-list>
+    </div>
+</div>
