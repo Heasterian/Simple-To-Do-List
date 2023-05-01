@@ -1,12 +1,15 @@
 {
   "name": "to-do-refactored",
   "version": "0.0.0",
+  "main": "app.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng build --base-href ./ && electron .",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +23,7 @@
     "@angular/platform-browser": "^15.1.0",
     "@angular/platform-browser-dynamic": "^15.1.0",
     "@angular/router": "^15.1.0",
+    "@ngneat/until-destroy": "^10.0.0-beta.0",
     "bootstrap": "^5.3.0-alpha2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -30,6 +34,8 @@
     "@angular/cli": "~15.1.6",
     "@angular/compiler-cli": "^15.1.0",
     "@types/jasmine": "~4.3.0",
+    "electron": "^24.1.2",
+    "electron-packager": "^17.1.1",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
