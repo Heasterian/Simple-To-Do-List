@@ -68,7 +68,7 @@
     word-break: break-all;
     span {
       align-content: flex-start;
-      word-break: break-all;
+      word-break: normal;
       line-break: anywhere;
     }
   }
@@ -98,6 +98,7 @@
   }
   
   .box {
-    grid-auto-flow: row;
-    grid-column-gap: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
   }

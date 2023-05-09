@@ -76,4 +76,10 @@ export class TaskListComponent {
   }
 
   trackByTask: TrackByFunction<TaskInterface[]> = (id, item) => item[id];
+
+  filterDone(taskType: keyof typeof this.TaskList) {
+    return this.TaskList[taskType].filter((x) => {
+      return x.done;
+    });
+  }
 }

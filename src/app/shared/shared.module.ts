@@ -16,6 +16,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SettingsComponent } from './components/settings/settings.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 @NgModule({
   declarations: [
     TaskFormComponent,
@@ -37,7 +39,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     MatIconModule,
     MatInputModule,
     DragDropModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressBarModule
   ],
   exports: [
     TaskFormComponent,
