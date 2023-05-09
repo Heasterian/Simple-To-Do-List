@@ -1,19 +1,21 @@
 <div cdkDropListGroup>
     <div class="row">
-        <div *ngFor="let list of this.TaskList | keyvalue" class="col-md-4">
+        <div *ngFor="let list of this.TaskList | keyvalue; trackby:(this.TaskList | keyvalue)" class="col-md-4">
             <div class="example-container">
                 <h2 class="head-title">
-                    <div>{{list.key}} <span *ngIf="this.TaskList[list.key].length > 0"> - {{
+                    <div>{{list.key}} <span *ngIf="this.TaskList[list.key].length > 0"> - {{ filterDone(list.key).length }}/{{
                             this.TaskList[list.key].length }}</span></div>
                     <div class="box">
                         <button mat-icon-button style="color: rgb(24, 110, 22);"
                             (click)="resetAllTasksStatus(list.key)"><mat-icon>restore</mat-icon></button>
                     </div>
                 </h2>
+                <mat-progress-bar *ngIf="this.TaskList[list.key].length > 0" mode="determinate"
+                    [value]='(filterDone(list.key).length/this.TaskList[list.key].length)*100'></mat-progress-bar>
                 <div cdkDropList [cdkDropListData]="this.TaskList[list.key]" class="example-list"
                     (cdkDropListDropped)="drop($event)">
                     <div class="example-box" [class.done]="item.done"
-                        *ngFor="let item of this.TaskList[list.key]; index as i" cdkDrag
+                        *ngFor="let item of this.TaskList[list.key]; trackBy: trackByTask; index as i" cdkDrag
                         [cdkDragDisabled]="(isEditEnabledAsync | async) || item.done"><span
                             class="wrapit">{{item.description}}</span>
                         <div class="box">

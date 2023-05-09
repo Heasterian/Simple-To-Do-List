@@ -1,7 +1,7 @@
 const {app, BrowserWindow} = require('electron')
+    
     const url = require("url");
     const path = require("path");
-
     let mainWindow
 
     function createWindow () {
@@ -10,7 +10,7 @@ const {app, BrowserWindow} = require('electron')
         height: 1080,
         webPreferences: {
           nodeIntegration: true
-        }
+        },
       })
 
       mainWindow.loadURL(
